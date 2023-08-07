@@ -6,7 +6,7 @@ import { Todo } from './entities/todo.entity';
 @Injectable()
 export class TodoService {
   create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+    return { id: 1, ...createTodoDto };
   }
 
   findAll(): Todo[] {
@@ -16,15 +16,15 @@ export class TodoService {
     ];
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
+  findOne(id: number): Todo {
+    return { id: id, text: 'Hello World', done: false, description: 'hoge' };
   }
 
   update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+    return { id: id, ...updateTodoDto };
   }
 
-  remove(id: number) {
+  remove(id: number): string {
     return `This action removes a #${id} todo`;
   }
 }
