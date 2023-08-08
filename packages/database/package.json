@@ -26,9 +26,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.1.1"
+    "@prisma/client": "^5.1.1",
+    "tsconfig": "*"
   },
   "devDependencies": {
+    "@types/node": "^20.4.8",
     "prisma": "^5.1.1",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
