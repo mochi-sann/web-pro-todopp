@@ -7,6 +7,7 @@ import { AspidaClient } from "@/lib/utils";
 import { useToast } from "./ui/use-toast";
 import { title } from "process";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export interface TodoItemProps {
   todoItem: TodoDto;
@@ -50,10 +51,12 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
           onCheckedChange={(e: boolean) => onCheckedChange(e)}
         />
       </div>
-      <div className="flex-1">
-        <p className="font-bold text-lg">{todoItem.text}</p>
-        <p className="">{props.todoItem.description}</p>
-      </div>
+      <Link href={`/todo/${props.todoItem.id}`}>
+        <div className="flex-1">
+          <p className="font-bold text-lg">{todoItem.text}</p>
+          <p className="">{props.todoItem.description}</p>
+        </div>
+      </Link>
       <div className="">
         <Button onClick={onDelete}>Delete</Button>
       </div>

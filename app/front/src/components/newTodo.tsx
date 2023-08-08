@@ -19,13 +19,16 @@ import { useToast } from "./ui/use-toast";
 
 const formSchema = z.object({
   text: z.string().min(2).max(200),
-  description: z.string(),
+  description: z.string().nullish(),
 });
 
 export const NewTodo = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: {
+      text: "",
+      description: "",
+    },
   });
 
   // 2. Define a submit handler.
@@ -33,7 +36,11 @@ export const NewTodo = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const data = await AspidaClient.todo.post({
-      body: { text: values.text, description: values.description, done: false },
+      body: {
+        text: values.text,
+        description: values.description || "",
+        done: false,
+      },
     });
     console.log(data);
   }
