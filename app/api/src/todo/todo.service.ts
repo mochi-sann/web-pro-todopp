@@ -2,29 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo } from './entities/todo.entity';
+import { prisma } from 'database';
 
 @Injectable()
 export class TodoService {
-  create(createTodoDto: CreateTodoDto) {
-    return { id: 1, ...createTodoDto };
+  async create(createTodoDto: CreateTodoDto) {
+    const todo = await prisma.todo.create({
+      data: {
+        text: createTodoDto.text,
+        description: createTodoDto.description,
+        done: createTodoDto.done,
+      },
+    });
+    return todo;
   }
 
-  findAll(): Todo[] {
-    return [
-      { id: 1, text: 'Hello World', done: false, description: 'hoge' },
-      { id: 2, text: 'Hello World', done: false, description: 'hoge' },
-    ];
+  async findAll(): Promise<Todo[]> {
+    return await prisma.todo.findMany();
   }
 
-  findOne(id: number): Todo {
-    return { id: id, text: 'Hello World', done: false, description: 'hoge' };
+  async findOne(id: number): Promise<Todo> {
+    return await prisma.todo.findUnique({
+      where: { id: id },
+    });
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return { id: id, ...updateTodoDto };
+  async update(id: number, updateTodoDto: UpdateTodoDto) {
+    return await prisma.todo.update({
+      where: { id: id },
+      data: {
+        done: updateTodoDto.done,
+        text: updateTodoDto.text,
+        description: updateTodoDto.description,
+      },
+    });
   }
 
-  remove(id: number): string {
-    return `This action removes a #${id} todo`;
+  async remove(id: number) {
+    return await prisma.todo.delete({ where: { id: id } });
   }
 }

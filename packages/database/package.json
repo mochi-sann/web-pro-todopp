@@ -27,7 +27,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.1.1",
-    "tsconfig": "*"
+    "tsconfig": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.4.8",

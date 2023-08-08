@@ -41,6 +41,9 @@ importers:
       class-validator:
         specifier: ^0.14.0
         version: 0.14.0
+      database:
+        specifier: workspace:^
+        version: link:../../packages/database
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -115,7 +118,7 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(prisma@5.1.1)
       tsconfig:
-        specifier: '*'
+        specifier: ^7.0.0
         version: 7.0.0
     devDependencies:
       '@types/node':
