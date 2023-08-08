@@ -1,9 +1,16 @@
 import { Button } from "@/components/ui/button";
+import { AspidaClient } from "@/lib/utils";
 
-export default function Home() {
+const getTodos = async () => {
+  return await AspidaClient.todo.get();
+};
+
+export default async function Home() {
+  const todo = await getTodos();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main>
       <Button>ボタン</Button>
+      {JSON.stringify(todo)}
     </main>
   );
 }
