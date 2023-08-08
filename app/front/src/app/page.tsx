@@ -1,8 +1,10 @@
+import { NewTodo } from "@/components/newTodo";
 import { Button } from "@/components/ui/button";
 import { AspidaClient } from "@/lib/utils";
 
 const getTodos = async () => {
-  return await AspidaClient.todo.get();
+  const todo = await AspidaClient.todo.get();
+  return todo;
 };
 
 export default async function Home() {
@@ -10,7 +12,7 @@ export default async function Home() {
   return (
     <main>
       <Button>ボタン</Button>
-      {JSON.stringify(todo)}
+      <NewTodo />
     </main>
   );
 }
