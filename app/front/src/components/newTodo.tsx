@@ -15,6 +15,7 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { AspidaClient } from "@/lib/utils";
+import { useToast } from "./ui/use-toast";
 
 const formSchema = z.object({
   text: z.string().min(2).max(200),
@@ -31,7 +32,7 @@ export const NewTodo = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const newTodo = await AspidaClient.todo.post({
+    await AspidaClient.todo.post({
       body: { text: values.text, description: values.description, done: false },
     });
   }

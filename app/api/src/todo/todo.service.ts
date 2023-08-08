@@ -19,7 +19,7 @@ export class TodoService {
 
   async findAll(): Promise<TodoDto[]> {
     return await prisma.todo.findMany({
-      orderBy: { id: 'desc' },
+      orderBy: { id: 'asc' },
     });
   }
 
