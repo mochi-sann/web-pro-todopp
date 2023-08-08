@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo } from './entities/todo.entity';
+import { TodoDto } from './entities/todo.entity';
 import { prisma } from 'database';
 
 @Injectable()
 export class TodoService {
-  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+  async create(createTodoDto: CreateTodoDto): Promise<TodoDto> {
     const todo = await prisma.todo.create({
       data: {
         text: createTodoDto.text,
@@ -17,19 +17,19 @@ export class TodoService {
     return todo;
   }
 
-  async findAll(): Promise<Todo[]> {
+  async findAll(): Promise<TodoDto[]> {
     return await prisma.todo.findMany({
       orderBy: { id: 'desc' },
     });
   }
 
-  async findOne(id: number): Promise<Todo> {
+  async findOne(id: number): Promise<TodoDto> {
     return await prisma.todo.findUnique({
       where: { id: id },
     });
   }
 
-  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
+  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<TodoDto> {
     return await prisma.todo.update({
       where: { id: id },
       data: {
@@ -40,7 +40,7 @@ export class TodoService {
     });
   }
 
-  async remove(id: number): Promise<Todo> {
+  async remove(id: number): Promise<TodoDto> {
     return await prisma.todo.delete({ where: { id: id } });
   }
 }
