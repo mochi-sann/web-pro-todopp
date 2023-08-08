@@ -15,4 +15,5 @@ model todo {
   text      String
   description String
   done      Boolean @default(false)
+  createdAt DateTime @default(now())
 }

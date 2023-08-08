@@ -6,7 +6,7 @@ import { prisma } from 'database';
 
 @Injectable()
 export class TodoService {
-  async create(createTodoDto: CreateTodoDto) {
+  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
     const todo = await prisma.todo.create({
       data: {
         text: createTodoDto.text,
@@ -18,7 +18,9 @@ export class TodoService {
   }
 
   async findAll(): Promise<Todo[]> {
-    return await prisma.todo.findMany();
+    return await prisma.todo.findMany({
+      orderBy: { id: 'desc' },
+    });
   }
 
   async findOne(id: number): Promise<Todo> {
@@ -27,7 +29,7 @@ export class TodoService {
     });
   }
 
-  async update(id: number, updateTodoDto: UpdateTodoDto) {
+  async update(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
     return await prisma.todo.update({
       where: { id: id },
       data: {
@@ -38,7 +40,7 @@ export class TodoService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<Todo> {
     return await prisma.todo.delete({ where: { id: id } });
   }
 }
