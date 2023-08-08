@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { AspidaClient } from "@/lib/utils";
 import { useToast } from "./ui/use-toast";
 import { title } from "process";
+import { Button } from "./ui/button";
 
 export interface TodoItemProps {
   todoItem: TodoDto;
@@ -29,6 +30,13 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
       description: JSON.stringify(checkupdate),
     });
   };
+  const onDelete = async () => {
+    await AspidaClient.todo._id(props.todoItem.id).delete();
+    toast({
+      title: "削除しました",
+    });
+    window.location.reload();
+  };
   return (
     <div
       className={`border-gray-500 border-2 rounded p-4 flex flex-row items-center gap-2 ${
@@ -42,9 +50,12 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
           onCheckedChange={(e: boolean) => onCheckedChange(e)}
         />
       </div>
-      <div>
+      <div className="flex-1">
         <p className="font-bold text-lg">{todoItem.text}</p>
         <p className="">{props.todoItem.description}</p>
+      </div>
+      <div className="">
+        <Button onClick={onDelete}>Delete</Button>
       </div>
     </div>
   );
