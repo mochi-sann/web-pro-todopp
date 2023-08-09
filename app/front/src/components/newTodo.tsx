@@ -16,7 +16,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { AspidaClient } from "@/lib/utils";
 import { useToast } from "./ui/use-toast";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   text: z.string().min(2).max(200),
@@ -24,6 +24,7 @@ const formSchema = z.object({
 });
 
 export const NewTodo = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +45,9 @@ export const NewTodo = () => {
       },
     });
     console.log(data);
-    window.location.reload();
+    form.reset();
+    router.push("/");
+    router.refresh();
   }
 
   return (
