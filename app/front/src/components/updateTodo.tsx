@@ -15,36 +15,41 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { AspidaClient } from "@/lib/utils";
-import { useToast } from "./ui/use-toast";
-import { Router, useRouter } from "next/router";
+import { TodoDto } from "../../api/@types";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   text: z.string().min(2).max(200),
   description: z.string(),
 });
 
-export const NewTodo = () => {
+type UpdateTodoProps = {
+  formValues: TodoDto;
+};
+
+export const UpdateTodo = (props: UpdateTodoProps) => {
+  const router = useRouter();
+  const pushToRounter = () => {};
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      text: "",
-      description: "",
-    },
+    defaultValues: props.formValues,
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const data = await AspidaClient.todo.post({
+    //
+    const data = await AspidaClient.todo._id(props.formValues.id).patch({
       body: {
         text: values.text,
         description: values.description || " ",
-        done: false,
+        done: props.formValues.done,
       },
     });
-    console.log(data);
-    window.location.reload();
+    router.push("/");
+    router.refresh();
   }
 
   return (
@@ -81,7 +86,7 @@ export const NewTodo = () => {
               </div>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Update</Button>
         </form>
       </Form>
     </div>

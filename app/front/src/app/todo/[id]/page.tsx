@@ -1,3 +1,4 @@
+import { UpdateTodo } from "@/components/updateTodo";
 import { AspidaClient } from "@/lib/utils";
 import { AspidaResponse } from "aspida";
 
@@ -13,7 +14,7 @@ export default async function TodoItemPage({
   const todos = await getTodos(Number(params.id));
   return (
     <main className="flex flex-col gap-2 max-w-3xl m-auto">
-      {JSON.stringify(todos)}
+      <UpdateTodo formValues={todos.body} />
     </main>
   );
 }

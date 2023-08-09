@@ -51,8 +51,11 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
           onCheckedChange={(e: boolean) => onCheckedChange(e)}
         />
       </div>
-      <Link href={`/todo/${props.todoItem.id}`}>
-        <div className="flex-1">
+      <Link
+        href={`/todo/${props.todoItem.id}`}
+        className="flex-1 hover:underline"
+      >
+        <div>
           <p className="font-bold text-lg">{todoItem.text}</p>
           <p className="">{props.todoItem.description}</p>
         </div>
