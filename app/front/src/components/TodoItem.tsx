@@ -8,6 +8,7 @@ import { useToast } from "./ui/use-toast";
 import { title } from "process";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export interface TodoItemProps {
   todoItem: TodoDto;
@@ -17,6 +18,8 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const [checked, setChecked] = useState(props.todoItem.done);
   const { toast } = useToast();
+  const router = useRouter();
+
   const onCheckedChange = async (e: boolean) => {
     setChecked(e);
     const checkupdate = await AspidaClient.todo._id(props.todoItem.id).patch({
@@ -36,7 +39,7 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
     toast({
       title: "削除しました",
     });
-    window.location.reload();
+    router.refresh();
   };
   return (
     <div
@@ -61,7 +64,9 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
         </div>
       </Link>
       <div className="">
-        <Button onClick={onDelete}>Delete</Button>
+        <Button onClick={onDelete} variant={"destructive"}>
+          Delete
+        </Button>
       </div>
     </div>
   );

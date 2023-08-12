@@ -46,7 +46,6 @@ export const NewTodo = () => {
     });
     console.log(data);
     form.reset();
-    router.push("/");
     router.refresh();
   }
 
